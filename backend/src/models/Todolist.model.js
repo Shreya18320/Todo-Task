@@ -11,6 +11,11 @@ const todoListSchema = new mongoose.Schema(
             type: String,
             enum: ['pending', 'completed'],
         },
+
+        createdAt: {
+        type: Date,
+        default: Date.now
+  }
         
     },
     {
@@ -19,3 +24,6 @@ const todoListSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model('TodoList', todoListSchema);
+
+
+
