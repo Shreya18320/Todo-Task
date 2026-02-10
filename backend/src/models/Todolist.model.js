@@ -10,13 +10,8 @@ const todoListSchema = new mongoose.Schema(
         status: {
             type: String,
             enum: ['pending', 'completed'],
+            default: 'pending',
         },
-
-        createdAt: {
-        type: Date,
-        default: Date.now
-  }
-        
     },
     {
         timestamps: true,
