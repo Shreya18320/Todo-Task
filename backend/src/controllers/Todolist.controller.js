@@ -2,9 +2,6 @@ const TodoList = require('../models/Todolist.model');
 const response = require("../common/response");
 
 
-
-
-
 exports.createTask = async (req, res) => {
     try {
         const todo = await TodoList.create(req.body);
@@ -28,23 +25,27 @@ exports.getTask=async (req,res)=>{
 exports.filterTask = async (req, res) => {
     try {
         const status = req.params.status;
-        const todo = await TodoList.find({ status: status });
+        const todo = await TodoList.find({ status });
         return response.success(res, 200, "data fetched successfully", todo);
     } catch (error) {
         return response.error(res, 500, error.message);
     }
 }
 
-
-
-
-
 exports.updateTask = async (req, res) => {
     try {
         const id = req.params.id;
-        const existingTask = await TodoList.findById(id);
-        const newStatus = existingTask.status === 'completed' ? 'pending' : 'completed';
-        const todo = await TodoList.findByIdAndUpdate(id, { status: newStatus }, { new: true });
+        const status=req.body.status;
+        
+        let newStatus ;
+
+        if(status==="completed"){
+            newStatus="pending"
+        }else{
+            newStatus="completed"
+        }
+
+        const todo = await TodoList.findByIdAndUpdate(id, { status: newStatus});
         return response.success(res, 200, "updated successfully", todo);
     } catch (error) {
         return response.error(res, 500, error.message);
